@@ -11,3 +11,9 @@ func WithOutput(output io.Writer) Option {
 		l.output = output
 	}
 }
+
+func WithPrefixDateTime() Option {
+	return func(l *Logger) {
+		l.prefixDateTime = true
+	}
+}

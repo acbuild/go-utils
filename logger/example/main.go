@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	lgr := logger.New(logger.LevelInfo, logger.WithOutput(os.Stdout))
+	lgr := logger.New(logger.LevelInfo, logger.WithOutput(os.Stdout), logger.WithPrefixDateTime())
 
 	lgr.Infof("Hello %s", "world")
 	lgr.Debugf("I am a debug message")

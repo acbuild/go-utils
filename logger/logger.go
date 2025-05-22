@@ -4,17 +4,19 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"time"
 )
 
 // Logger is used to log messages at different levels.
 type Logger struct {
-	threshold Level
-	output    io.Writer
+	threshold      Level
+	output         io.Writer
+	prefixDateTime bool
 }
 
 // New creates a new Logger instance with the specified threshold level.
 func New(threshold Level, opts ...Option) *Logger {
-	lgr := &Logger{threshold: threshold, output: os.Stdout}
+	lgr := &Logger{threshold: threshold, output: os.Stdout, prefixDateTime: false}
 
 	for _, configFunc := range opts {
 		configFunc(lgr)
@@ -46,6 +48,9 @@ func (l *Logger) logf(loglevel Level, format string, args ...any) {
 	}
 	if l.output == nil {
 		l.output = os.Stdout
+	}
+	if l.prefixDateTime {
+		format = time.Now().Format(time.UnixDate) + " - " + format
 	}
 
 	fmt.Printf(format+"\n", args...)
